@@ -1,0 +1,197 @@
+<div class="container" style="padding-top: 50px;">
+
+    <div class="row">
+
+        <div class="col-lg-3">
+            <h3 class="my-4">Components</h3>
+            <div class="list-group">
+                <span id="filter-item-dropdown" class="list-group-item sub-filter"  (click) ="filterUI('dropdown')">Drop Down</span>
+                <span id="filter-item-overlay"  class="list-group-item sub-filter" (click) ="filterUI('overlay')">LightBox</span>
+                <span  id="filter-item-accordion" class="list-group-item sub-filter" (click) ="filterUI('accordion')">Accordion</span>
+                <span  id="filter-item-tabmenu" class="list-group-item sub-filter" (click) ="filterUI('tabmenu')">Tab Menu</span>
+                <span  id="filter-item-rating" class="list-group-item sub-filter" (click) ="filterUI('rating')">Rating</span>
+                <span  id="filter-item-slider" class="list-group-item sub-filter" (click) ="filterUI('slider')">Slider</span>
+                <span  id="filter-item-carosel" class="list-group-item sub-filter" (click) ="filterUI('carosel')">Carosel</span>
+                <span  id="filter-item-tableview" class="list-group-item sub-filter" (click) ="filterUI('tableview')">Table With Filter</span>
+                <span  id="filter-item-dataview" class="list-group-item sub-filter" (click) ="filterUI('dataview')">Data View</span>
+                <span  id="filter-item-calender" class="list-group-item sub-filter" (click) ="filterUI('calender')">Calender</span>
+                <span  id="filter-item-charts" class="list-group-item sub-filter" (click) ="filterUI('charts')">Charts</span>
+                <span  id="filter-item-toasts" class="list-group-item sub-filter" (click) ="filterUI('toasts')">Toasts</span>
+
+
+            </div>
+            <div>
+
+            </div>
+        </div>
+
+        <!-- /.col-lg-3 -->
+
+        <div class="col-lg-9">
+
+            <div id="prime-custom-dropdown" class="item">
+                <h3 class="my-4">Drop Down</h3>
+
+                <p-dropdown [options]="countriesList" [(ngModel)]="selectedItem" optionLabel="countryName"></p-dropdown>
+                {{selectedItem?.countryName}}
+            </div>
+            <div id="prime-custom-overlay" class="item">
+                <h3 class="my-4">Over lay</h3>
+
+                <h3 class="first">Basic</h3>
+                <p-lightbox [images]="images"></p-lightbox>
+
+                <h3>Content</h3>
+                <p-lightbox type="content">
+                    <a class="group" href="#">
+                        Watch Video
+                    </a>
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/9bZkp7q19f0" frameborder="0"
+                        allowfullscreen></iframe>
+                </p-lightbox>
+            </div>
+            <div id="prime-custom-accordion" class="item">
+                <h3 class="my-4">Accordion</h3>
+
+                <p-accordion [activeIndex]="index">
+                    <p-accordionTab header="{{accordionItem.title}}" *ngFor="let accordionItem of accordionList">
+                        {{accordionItem.description}}
+                    </p-accordionTab>
+
+                </p-accordion>
+            </div>
+            <div id="prime-custom-tabmenu" class="item">
+                <h3 class="my-4">Tab Menu</h3>
+                <p-tabMenu [model]="items"></p-tabMenu>
+            </div>
+
+            <div id="prime-custom-rating" class="item">
+                <h3 class="my-4">Rating</h3>
+                <h3>Callback {{val2}}</h3>
+                <p-rating [(ngModel)]="val2" (onRate)="handleRate($event)" (onCancel)="handleCancel($event)"></p-rating>
+                <span *ngIf="msg" style="margin-left:10px">{{msg}}</span>
+
+            </div>
+
+            <div id="prime-custom-slider" class="item">
+                <h3 class="my-4">Slider</h3>
+
+                <p-slider [(ngModel)]="SliderValue" [style]="{'width':'14em'}" [step]="20"></p-slider>
+                Slider - {{SliderValue}}
+            </div>
+            <div id="prime-custom-carosel" class="item">
+                <h3 class="my-4">Carosel</h3>
+                <p-carousel [value]="carsList" styleClass="custom-carousel" [numVisible]="3" [numScroll]="1"
+                    [circular]="true" [autoplayInterval]="3000" [responsiveOptions]="responsiveOptions">
+                    <p-header>
+                        <h3>Circular, AutoPlay, 3 Items per Page and Scroll by 1</h3>
+                    </p-header>
+                    <ng-template let-car pTemplate="item">
+                        <div class="car-details">
+                            <div class="p-grid p-nogutter">
+                                <div class="p-col-12">
+                                    <img src="{{car.img}}" />
+                                </div>
+                                <div class="p-col-12 car-data">
+                                    <div class="car-title">{{car.brand}}</div>
+                                    <div class="car-subtitle">{{car.year}} | {{car.color}}</div>
+
+                                    <div class="car-buttons">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-carousel>
+            </div>
+
+            <div id="prime-custom-tableview" class="item">
+                <h3 class="my-4">Table with filter</h3>
+               
+                <p-treeTable #tt [value]="treeData" [columns]="cols">
+                        <ng-template pTemplate="caption">
+                                <div style="text-align: right">        
+                                    <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+                                    <input type="text" pInputText size="50" placeholder="Global Filter" (input)="tt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="header" let-columns>
+                                <tr>
+                                    <th *ngFor="let col of cols">
+                                        {{col.header}}
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th *ngFor="let col of cols">
+                                        <input pInputText type="text" (input)="tt.filter($event.target.value, col.field, col.filterMatchMode)">
+                                    </th>
+                                </tr>
+                            </ng-template>
+                    <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
+                        <tr>
+                            <td *ngFor="let col of columns; let i = index">
+                                <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
+                                {{rowData[col.field]}}
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-treeTable>
+            </div>
+
+            <div id="prime-custom-dataview" class="item">
+                    <h3 class="my-4">Data View</h3>
+                    <p-dataView [value]="carsList" [paginator]="true" [rows]="2">
+                            <ng-template let-car pTemplate="listItem">
+                                <div>
+                                    {{car.brand}}
+                                </div>
+                            </ng-template>
+                            <ng-template let-car pTemplate="gridItem">
+                                <div class="ui-g-12 ui-md-3">
+                                    {{car.year}}
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="paginatorleft" let-state>
+                               
+                                <button type="button" pButton icon="fa-refresh"></button>
+                            </ng-template>
+                            <ng-template pTemplate="paginatorright">
+                                <button type="button" pButton icon="fa-cloud-upload"></button>
+                            </ng-template>
+                        </p-dataView>
+                    
+            </div>
+
+            <div id="prime-custom-calender" class="item">
+                    <h3 class="my-4">Calender</h3>
+  
+  <p-calendar [(ngModel)]="selectedDate" [locale]="en"></p-calendar> Selected Date - {{selectedDate}}
+            </div>
+
+            <div id="prime-custom-charts" class="item">
+                    <h3 class="my-4">Charts</h3>
+                    <p-chart type="pie" [data]="charData"></p-chart>
+  
+            </div>
+
+            <div id="prime-custom-toasts" class="item">
+                    <h3 class="my-4">Toast</h3>
+                    <p-toast [style]="{marginTop: '80px'}"></p-toast>
+              
+                        <h3 class="first">Severities</h3>
+<button type="button" pButton (click)="showSuccess()" label="Success" class="ui-button-success"></button>
+<button type="button" pButton (click)="showInfo()" label="Info" class="ui-button-info"></button>
+<button type="button" pButton (click)="showWarn()" label="Warn" class="ui-button-warning"></button>
+<button type="button" pButton (click)="showError()" label="Error" class="ui-button-danger"></button>
+
+            </div>
+        </div>
+
+
+        <!-- /.col-lg-9 -->
+
+    </div>
+
+</div>
+<!-- /.container -->
