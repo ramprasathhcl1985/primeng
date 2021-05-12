@@ -22,7 +22,7 @@
     "@angular/router": "~8.2.14",
     "boostrap": "^2.0.0",
     "bootstrap": "^4.3.1",
-    "chart.js": "^2.9.3",
+    "chart.js": "^2.9.4",
     "jquery": "^3.4.1",
     "primeicons": "^2.0.0",
     "primeng": "^8.1.1",
